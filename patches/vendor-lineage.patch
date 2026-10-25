@@ -1,0 +1,55 @@
+diff --git a/config/common.mk b/config/common.mk
+index 6e7a8c6..5282fcf 100644
+--- a/config/common.mk
++++ b/config/common.mk
+@@ -114,9 +114,7 @@ PRODUCT_PACKAGES += \
+ # Lineage packages
+ PRODUCT_PACKAGES += \
+     LineageParts \
+-    LineageSettingsProvider \
+-    LineageSetupWizard \
+-    Updater
++    LineageSettingsProvider
+ 
+ # Themes
+ PRODUCT_PACKAGES += \
+diff --git a/config/common_mobile.mk b/config/common_mobile.mk
+index 1f1c241..e55b945 100644
+--- a/config/common_mobile.mk
++++ b/config/common_mobile.mk
+@@ -8,19 +8,11 @@ PRODUCT_PRODUCT_PROPERTIES += \
+ 
+ # AOSP packages
+ PRODUCT_PACKAGES += \
+-    Email \
+-    ExactCalculator \
+-    Exchange2
++    ExactCalculator
+ 
+ # Lineage packages
+ PRODUCT_PACKAGES += \
+-    Backgrounds \
+-    Eleven \
+-    Etar \
+-    Jelly \
+-    Profiles \
+-    Seedvault
+-
++    Profiles
+ ifneq ($(TARGET_EXCLUDES_AUDIOFX),true)
+ PRODUCT_PACKAGES += \
+     AudioFX
+diff --git a/config/telephony.mk b/config/telephony.mk
+index be414ed..958ad9e 100644
+--- a/config/telephony.mk
++++ b/config/telephony.mk
+@@ -12,9 +12,6 @@ PRODUCT_PACKAGES += \
+     apns-conf.xml
+ 
+ # Telephony packages
+-PRODUCT_PACKAGES += \
+-    messaging \
+-    Stk
+ 
+ # Default ringtone
+ PRODUCT_PRODUCT_PROPERTIES += \

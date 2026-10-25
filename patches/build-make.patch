@@ -1,0 +1,198 @@
+diff --git a/core/Makefile b/core/Makefile
+index 027df58..190a722 100644
+--- a/core/Makefile
++++ b/core/Makefile
+@@ -393,6 +393,11 @@ else
+   BUILD_DISPLAY_ID := $(build_desc)
+ endif
+ 
++# nx523j: custom Chinese display id (Settings -> About Phone)
++ifeq ($(TARGET_DEVICE),nx523j)
++  BUILD_DISPLAY_ID := lineage_nx523j-18.1-王胖子极限精简v18
++endif
++
+ # Accepts a whitespace separated list of product locales such as
+ # (en_US en_AU en_GB...) and returns the first locale in the list with
+ # underscores replaced with hyphens. In the example above, this will
+diff --git a/target/product/aosp_base_telephony.mk b/target/product/aosp_base_telephony.mk
+index 0d4e333..5a5c18b 100644
+--- a/target/product/aosp_base_telephony.mk
++++ b/target/product/aosp_base_telephony.mk
+@@ -15,5 +15,3 @@
+ #
+ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+ 
+-PRODUCT_PACKAGES += \
+-    messaging
+diff --git a/target/product/aosp_product.mk b/target/product/aosp_product.mk
+index 3e03e62..2b601e3 100644
+--- a/target/product/aosp_product.mk
++++ b/target/product/aosp_product.mk
+@@ -34,10 +34,7 @@ endif
+ 
+ # More AOSP packages
+ PRODUCT_PACKAGES += \
+-    messaging \
+-    PhotoTable \
+     preinstalled-packages-platform-aosp-product.xml \
+-    WallpaperPicker \
+ 
+ ifeq ($(LINEAGE_BUILD),)
+ # Telephony:
+diff --git a/target/product/base_system.mk b/target/product/base_system.mk
+index 5b118ee..6f361aa 100644
+--- a/target/product/base_system.mk
++++ b/target/product/base_system.mk
+@@ -66,11 +66,9 @@ PRODUCT_PACKAGES += \
+     com.android.tethering \
+     com.android.tzdata \
+     com.android.wifi \
+-    ContactsProvider \
+     content \
+     crash_dump \
+     CtsShimPrebuilt \
+-    CtsShimPrivPrebuilt \
+     debuggerd\
+     device_config \
+     dmctl \
+@@ -79,7 +77,6 @@ PRODUCT_PACKAGES += \
+     dpm \
+     dumpstate \
+     dumpsys \
+-    DynamicSystemInstallationService \
+     e2fsck \
+     ExtShared \
+     flags_health_check \
+@@ -235,7 +232,6 @@ PRODUCT_PACKAGES += \
+     screencap \
+     sdcard \
+     secdiscard \
+-    SecureElement \
+     selinux_policy_system \
+     sensorservice \
+     service \
+diff --git a/target/product/full_base.mk b/target/product/full_base.mk
+index 267859a..31bfedf 100644
+--- a/target/product/full_base.mk
++++ b/target/product/full_base.mk
+@@ -25,7 +25,6 @@ PRODUCT_PACKAGES := \
+ 
+ PRODUCT_PACKAGES += \
+     LiveWallpapersPicker \
+-    PhotoTable \
+     preinstalled-packages-platform-full-base.xml
+ 
+ # Bluetooth:
+diff --git a/target/product/handheld_product.mk b/target/product/handheld_product.mk
+index c5ddfbd..7f06796 100644
+--- a/target/product/handheld_product.mk
++++ b/target/product/handheld_product.mk
+@@ -22,16 +22,9 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/media_product.mk)
+ 
+ # /product packages
+ PRODUCT_PACKAGES += \
+-    Browser2 \
+-    Calendar \
+-    Contacts \
+-    DeskClock \
+     Gallery2 \
+-    Music \
+     OneTimeInitializer \
+     preinstalled-packages-platform-handheld-product.xml \
+-    QuickSearchBox \
+-    SettingsIntelligence \
+     frameworks-base-overlays
+ 
+ ifneq ($(PRODUCT_NO_CAMERA),true)
+diff --git a/target/product/handheld_system.mk b/target/product/handheld_system.mk
+index f6c92b5..060ccd6 100644
+--- a/target/product/handheld_system.mk
++++ b/target/product/handheld_system.mk
+@@ -38,7 +38,6 @@ PRODUCT_PACKAGES += \
+     BluetoothMidiService \
+     BookmarkProvider \
+     BuiltInPrintService \
+-    CalendarProvider \
+     cameraserver \
+     CaptivePortalLogin \
+     CertInstaller \
+@@ -52,7 +51,6 @@ PRODUCT_PACKAGES += \
+     InputDevices \
+     KeyChain \
+     librs_jni \
+-    ManagedProvisioning \
+     MmsService \
+     MtpService \
+     MusicFX \
+@@ -61,13 +59,9 @@ PRODUCT_PACKAGES += \
+     PrintSpooler \
+     ProxyHandler \
+     screenrecord \
+-    SecureElement \
+     SharedStorageBackup \
+     SimAppDialog \
+     Telecom \
+-    TelephonyProvider \
+-    TeleService \
+-    Traceur \
+     UserDictionaryProvider \
+     VpnDialogs \
+     vr \
+diff --git a/target/product/mainline.mk b/target/product/mainline.mk
+index 418b1ee..23c403d 100644
+--- a/target/product/mainline.mk
++++ b/target/product/mainline.mk
+@@ -38,8 +38,6 @@ $(call inherit-product, frameworks/base/data/sounds/AudioPackage14.mk)
+ endif
+ 
+ PRODUCT_PACKAGES += \
+-    PhotoTable \
+-    WallpaperPicker \
+ 
+ ifeq ($(LINEAGE_BUILD),)
+ PRODUCT_COPY_FILES += device/sample/etc/apns-full-conf.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/apns-conf.xml
+diff --git a/target/product/mainline_system.mk b/target/product/mainline_system.mk
+index e9f9dde..9d56991 100644
+--- a/target/product/mainline_system.mk
++++ b/target/product/mainline_system.mk
+@@ -36,7 +36,6 @@ PRODUCT_PACKAGES += \
+     RcsService \
+     SafetyRegulatoryInfo \
+     Stk \
+-    Tag \
+     TimeZoneUpdater \
+ 
+ # Binaries
+diff --git a/target/product/telephony_product.mk b/target/product/telephony_product.mk
+index 3ec954f..949c095 100644
+--- a/target/product/telephony_product.mk
++++ b/target/product/telephony_product.mk
+@@ -18,5 +18,3 @@
+ # hardware, and install to the product partition.
+ 
+ # /product packages
+-PRODUCT_PACKAGES += \
+-    Dialer \
+diff --git a/target/product/telephony_system.mk b/target/product/telephony_system.mk
+index ef48719..4ba6b82 100644
+--- a/target/product/telephony_system.mk
++++ b/target/product/telephony_system.mk
+@@ -18,9 +18,7 @@
+ # hardware, and install on the system partition.
+ 
+ PRODUCT_PACKAGES := \
+-    ONS \
+     CarrierDefaultApp \
+-    CallLogBackup \
+     com.android.cellbroadcast \
+     CellBroadcastLegacyApp \
+ 
+diff --git a/target/product/telephony_system_ext.mk b/target/product/telephony_system_ext.mk
+index f81a607..b12f9e6 100644
+--- a/target/product/telephony_system_ext.mk
++++ b/target/product/telephony_system_ext.mk
+@@ -20,4 +20,3 @@
+ # /system_ext packages
+ PRODUCT_PACKAGES += \
+     CarrierConfig \
+-    EmergencyInfo \

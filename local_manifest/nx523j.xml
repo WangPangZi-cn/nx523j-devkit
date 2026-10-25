@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  nx523j (Nubia Z11 Max) — LineageOS 18.1 local_manifest
+
+  用法：放到源码树 .repo/local_manifests/nx523j.xml，然后 repo sync。
+
+  ⚠️ 权威来源是本 devkit 的三个 tar.gz（我们实际构建所用，与补丁严格对应），
+  它们不是 git 检出、无法确认上游确切分支，请优先直接解压：
+
+      tar xzf device-tree_nubia.tar.gz  -C <源码根目录>   # 解出 device/nubia/
+      tar xzf vendor-blobs_nubia.tar.gz -C <源码根目录>   # 解出 vendor/nubia/
+      tar xzf kernel_nubia_nx523j.tar.gz -C <源码根目录>/kernel/nubia/
+                                                          # 解出 kernel/nubia/nx523j/
+
+  如果想改用 git 上游管理设备树/内核，下面的 remote 供参考：
+  - kernel 上游已核实存在：github.com/nubia-development/android_kernel_nubia_msm8976
+    分支 nubia_msm8976_q-dev（Android 10，Q）。我们构建用的 3.10.108 内核
+    与其同源（MoKee 系），但分支对应关系未逐 commit 核实。
+  - 设备树上游 MoKee 已停更，本树是其 Android 11 延续版，无公开仓库可指。
+-->
+<manifest>
+  <remote name="nubia-dev" fetch="https://github.com/nubia-development" />
+
+  <!-- 如需用上游 git 管理内核，取消注释并自行核对与 tar 包的差异：
+  <project path="kernel/nubia/nx523j"
+           name="android_kernel_nubia_msm8976"
+           remote="nubia-dev"
+           revision="nubia_msm8976_q-dev" />
+  -->
+</manifest>

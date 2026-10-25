@@ -1,0 +1,12 @@
+diff --git a/bluetooth/1.0/default/Android.bp b/bluetooth/1.0/default/Android.bp
+index f66c25e..ee58549 100644
+--- a/bluetooth/1.0/default/Android.bp
++++ b/bluetooth/1.0/default/Android.bp
+@@ -116,6 +116,7 @@ cc_test_host {
+ cc_binary {
+     name: "android.hardware.bluetooth@1.0-service",
+     defaults: ["hidl_defaults"],
++    compile_multilib: "prefer32",
+     relative_install_path: "hw",
+     vendor: true,
+     init_rc: ["android.hardware.bluetooth@1.0-service.rc"],

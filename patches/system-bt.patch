@@ -1,0 +1,26 @@
+diff --git a/hci/src/hci_layer_android.cc b/hci/src/hci_layer_android.cc
+index d86a79b..3a72f42 100644
+--- a/hci/src/hci_layer_android.cc
++++ b/hci/src/hci_layer_android.cc
+@@ -134,12 +134,17 @@ class BluetoothHciCallbacks : public V1_1::IBluetoothHciCallbacks {
+ void hci_initialize() {
+   LOG_INFO(LOG_TAG, "%s", __func__);
+ 
+-  btHci_1_1 = V1_1::IBluetoothHci::getService();
++  // nx523j: device only ships a V1.0 HAL - try V1.0 first to avoid the
++  // multi-second V1.1 lazy-HAL lookup timeout on every BT enable.
++  btHci = V1_0::IBluetoothHci::getService();
+ 
+-  if (btHci_1_1 != nullptr) {
+-    btHci = btHci_1_1;
++  if (btHci != nullptr) {
++    btHci_1_1 = nullptr;
+   } else {
+-    btHci = V1_0::IBluetoothHci::getService();
++    btHci_1_1 = V1_1::IBluetoothHci::getService();
++    if (btHci_1_1 != nullptr) {
++      btHci = btHci_1_1;
++    }
+   }
+ 
+   // If android.hardware.bluetooth* is not found, Bluetooth can not continue.
